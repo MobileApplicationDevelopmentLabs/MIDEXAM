@@ -10,11 +10,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -38,61 +42,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.myapplication.R
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.delay
 import androidx.compose.material3.MaterialTheme as MaterialTheme1
 import androidx.compose.ui.res.painterResource as painterResource1
-
-/*
-@Composable
-fun Navigation(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-
-    NavHost(
-        navController = navController,
-        startDestination = "screenA",
-        modifier = modifier
-    ) {
-        composable("screenA") {
-            ScreenA(
-                onNavigateToScreenB = { navController.navigate("screenB") }
-            )
-        }
-        composable("screenB") {
-            ScreenB()
-        }
-    }
-}
-
-@Composable
-fun ScreenA(
-    onNavigateToScreenB: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    // Content of Screen A
-    Button(onClick = onNavigateToScreenB) {
-        Text("Go to Screen B")
-    }
-}
-
-@Composable
-fun ScreenB(
-    modifier: Modifier = Modifier
-) {
-    Button(onClick = {}) {
-        Text("Welcome to the Screen B")
-    }
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun NavigationPreview() {
-    Navigation()
-}
-
-*/
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,7 +107,6 @@ fun getWeatherInfo(context: Context, cityName: String): WeatherInfo {
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    // Display a splash screen and navigate to the input screen after 3 seconds
     LaunchedEffect(Unit) {
 
         delay(3000)
@@ -164,13 +117,28 @@ fun SplashScreen(navController: NavController) {
 @Composable
 fun InputScreen(navController: NavController) {
     // Get the city name from the user and navigate to the weather screen
-    
+
     var cityName by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
+        Text("Select City", style = MaterialTheme1.typography.bodySmall)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Icon(
+            imageVector = Icons.Filled.LocationOn,
+            contentDescription = "App icon",
+            modifier = Modifier.size(100.dp)
+        )
+
+        Image(
+            painter = painterResource1(id = R.drawable.map),
+            contentDescription = "Map image",
+            modifier = Modifier.fillMaxWidth()
+        )
         TextField(
             value = cityName,
             onValueChange = { cityName = it },
